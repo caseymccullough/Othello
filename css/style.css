@@ -1,0 +1,58 @@
+/*# sourceMappingURL=main.scss.map */
+*{
+    border: 1px darkgray solid;
+    font-size: 10px;
+}
+
+body{
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+
+    
+}
+
+nav{
+    
+    background-color: darkgray;
+    color: white;
+    display: flex; 
+    justify-content: space-between;
+}
+
+#nav-header{
+    font-size: 3em;
+}
+
+#scoreboard{
+    background-color: darkgray;
+    font-size: 1em; 
+}
+
+#board{
+    display: grid;
+
+    grid-template-columns: repeat(8, 45px [col-start]);
+    grid-template-rows: repeat(8, 45px [row-start]);
+    /* grid-gap: 3px; */
+
+    background-color: green;
+}
+
+#board > * {
+    /* border: 2px solid rgb(214,232,182); */
+  }
+
+  .square{
+      border: black 2px solid;
+      width: 40px;
+      height: 40px;
+  }
+
+  .black {
+      background-color: black;
+  }
+
+  .white {
+      background-color: white;
+  }
