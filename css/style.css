@@ -1,13 +1,14 @@
 /*# sourceMappingURL=main.scss.map */
 *{
-    border: 1px darkgray solid;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 body{
     
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
+    max-width: 1000px;
+    margin: auto;
+    background-color: black;
 
     
 }
@@ -18,6 +19,9 @@ nav{
     color: white;
     display: flex; 
     justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  
 }
 
 #nav-header{
@@ -25,34 +29,44 @@ nav{
 }
 
 #scoreboard{
-    background-color: darkgray;
     font-size: 1em; 
+    border: black 2px solid;
 }
 
 #board{
     display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(8, 65px [col-start]);
+    grid-template-rows: repeat(8, 65px [row-start]);
 
-    grid-template-columns: repeat(8, 45px [col-start]);
-    grid-template-rows: repeat(8, 45px [row-start]);
+    padding-top: 2%;
+    border: 2px white solid;
     /* grid-gap: 3px; */
-
-    background-color: green;
+    
 }
 
-#board > * {
-    /* border: 2px solid rgb(214,232,182); */
-  }
-
   .square{
+    background-color: green;
       border: black 2px solid;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
   }
 
   .black {
       background-color: black;
+      color: white;
   }
 
   .white {
       background-color: white;
+      color: black;
+  }
+
+  #footer{
+      height: 3em;
+      width: 200px;
+      font-size: 2 em;
+      background-color: green;
+      color: white;
+      margin: auto;
   }
