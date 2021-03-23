@@ -1,1 +1,109 @@
 
+/*# sourceMappingURL=main.scss.map */
+*{
+    font-size: 12px;
+}
+
+body{
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 900px;
+    margin: auto;
+    background-color: black;
+
+    
+}
+
+nav{
+    
+    background-color: black;
+    color: white;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; 
+}
+
+#nav-header{
+    font-size: 4em;
+    font-family: 'Libre Baskerville', serif;
+}
+
+#restart-btn {
+    background-color: green;
+    color: white;
+    width: 6em;
+    height: 4em;
+    border-radius: 15px;
+    border: 2px white solid;
+    text-align: center;
+    
+}
+
+
+
+#center-section{
+    background-color: darkgray;
+    border: 2px white solid;
+}
+
+#board{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(8, 65px [col-start]);
+    grid-template-rows: repeat(8, 65px [row-start]);
+
+    padding-top: 2%;
+    
+    /* grid-gap: 3px; */
+    
+}
+
+  .square{
+    background-color: green;
+      border: black 1px solid;
+      width: 63px;
+      height: 63px;
+      margin: auto;
+    
+  }
+
+  .black {
+      background-color: black;
+      color: white;
+  }
+
+  .white {
+      background-color: white;
+      color: black;
+  }
+
+  #footer{
+      height: 2.5em;
+      width: 500px;
+      font-size: 2em;
+      background-color: green;
+      color: white;
+      margin: 20px auto;
+
+      display: flex; 
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      
+  }
+  
+  .numTiles {
+      width: 6em;
+      height: 3.5em;
+      text-align: center;
+
+      span{
+          font-size: 2em;
+      }
+  }
+
+  #gold-border {
+      border: 2px solid gold;
+  }

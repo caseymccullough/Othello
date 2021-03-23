@@ -1,72 +1,95 @@
 /*# sourceMappingURL=main.scss.map */
-*{
-    font-size: 12px;
+* {
+  font-size: 12px;
 }
 
-body{
-    
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 1000px;
-    margin: auto;
-    background-color: black;
-
-    
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: auto;
+  background-color: black;
 }
 
-nav{
-    
-    background-color: darkgray;
-    color: white;
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  
+nav {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
-#nav-header{
-    font-size: 3em;
+#nav-header {
+  font-size: 4em;
+  font-family: "Libre Baskerville", serif;
 }
 
-#scoreboard{
-    font-size: 1em; 
-    border: black 2px solid;
+#restart-btn {
+  background-color: green;
+  color: white;
+  width: 6em;
+  height: 4em;
+  border-radius: 15px;
+  border: 2px white solid;
+  text-align: center;
 }
 
-#board{
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(8, 65px [col-start]);
-    grid-template-rows: repeat(8, 65px [row-start]);
-
-    padding-top: 2%;
-    border: 2px white solid;
-    /* grid-gap: 3px; */
-    
+#center-section {
+  background-color: darkgray;
+  border: 2px white solid;
 }
 
-  .square{
-    background-color: green;
-      border: black 2px solid;
-      width: 60px;
-      height: 60px;
-  }
+#board {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(8, 65px [col-start]);
+  grid-template-rows: repeat(8, 65px [row-start]);
+  padding-top: 2%;
+  /* grid-gap: 3px; */
+}
 
-  .black {
-      background-color: black;
-      color: white;
-  }
+.square {
+  background-color: green;
+  border: black 1px solid;
+  width: 63px;
+  height: 63px;
+  margin: auto;
+}
 
-  .white {
-      background-color: white;
-      color: black;
-  }
+.black {
+  background-color: black;
+  color: white;
+}
 
-  #footer{
-      height: 3em;
-      width: 200px;
-      font-size: 2 em;
-      background-color: green;
-      color: white;
-      margin: auto;
-  }
+.white {
+  background-color: white;
+  color: black;
+}
+
+#footer {
+  height: 2.5em;
+  width: 500px;
+  font-size: 2em;
+  background-color: green;
+  color: white;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.numTiles {
+  width: 6em;
+  height: 3.5em;
+  text-align: center;
+}
+.numTiles span {
+  font-size: 2em;
+}
+
+.gold-border {
+  border: 3px solid gold;
+}
+
+/*# sourceMappingURL=style.css.map */

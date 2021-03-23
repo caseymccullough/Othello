@@ -1,7 +1,11 @@
 // 
 
 let gameBoard = document.getElementById("board");
-
+let restartButton = document.getElementById("restart-btn");
+/*
+let ding = document.getElementById("ding");
+can't get this to work . . . 
+*/
 
 // 
 
@@ -21,6 +25,8 @@ const init = () => {
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     currentPlayer= -1;
 
+    restartButton.addEventListener('click', restartGame);
+
     for (let row = 0; row < grid.length; row++)
     {
         for (let col = 0; col < grid[row].length; col++)
@@ -39,7 +45,13 @@ const init = () => {
     updateHTML();
 }
 
+
+
 const processSquareSelection = (event) => {
+
+    // // play sound
+    // ding.play();
+
     console.log ("Square played for " + currentPlayer);
     const location = event.target.id;
     
@@ -50,6 +62,41 @@ const processSquareSelection = (event) => {
     grid[rowClicked][colClicked] = currentPlayer;
     updateHTML();
 }
+
+/*
+    adjusts grid based on placement of new tile.
+    @row the row into which the new tile was placed
+    @col the col into which the new tile was placed
+*/
+const flipTiles = (row, col) => {
+
+    flipTilesNorth(row, col);
+   // flipTilesSouth(row, col);    
+}
+
+const flipTilesNorth = (row, col) =>{
+
+    let numTilesToFlip = countTilesNorth(row, col);
+    console.log("tiles to the north: " + numTiles);
+}
+
+/*
+    col will be dropping, row stays the same. 
+*/
+const countTilesNorth = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentCol = newTileCol - 1; // move to first row above 
+    while (currentCol > 0 && grid[newTileRow][currentCol] === colorToChange)
+    {
+        tilesToChange++;
+        currentCol--;
+    }
+    return tilesToChange;
+}
+
 
 const updateHTML = () => {
     
@@ -78,9 +125,28 @@ const updateHTML = () => {
     document.getElementById("num-black-tiles").innerHTML = blackTileCount;
     document.getElementById("num-white-tiles").innerHTML = whiteTileCount;
     
-    currentPlayer *= -1; // flip -1 to +1 and vice versa
-    console.log ("current: " + currentPlayer);
+    setNextTurn();
+
+
 } // end updateHTML()
+
+/*
+    Place gold border around one of the player's, indicating it is their turn. 
+*/
+const setNextTurn = () => {
+    currentPlayer *= -1; // flip -1 to +1 and vice versa
+
+    if (currentPlayer > 0) // black's turn
+    {
+        document.getElementById("black-tiles-div").classList.add("gold-border");
+        document.getElementById("white-tiles-div").classList.remove("gold-border");
+    }
+    else // white's turn
+    {
+        document.getElementById("white-tiles-div").classList.add("gold-border");
+        document.getElementById("black-tiles-div").classList.remove("gold-border");
+    }
+}
 
 function makeSquareWhite (row, col) {
     
@@ -96,6 +162,11 @@ function makeSquareBlack(row, col) {
         let squareToBlack = document.getElementById(squareId);
         squareToBlack.classList.remove("white");
         squareToBlack.classList.add("black");
+}
+
+const restartGame = () => {
+
+    console.log ("RESTART");
 }
 
 

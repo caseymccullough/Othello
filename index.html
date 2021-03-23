@@ -5,26 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
     
     <title>Othello</title>
 </head>
 <body>
-    <nav> 
+    <audio id="ding">
+        <source src="sounds/ding.wave" type="audio/wave">
+        Your browser does not support the audio element.
+      </audio>
+    <nav id = "header-nav"> 
          <img src="img/board_icon.png" alt="An Othello Logo">
          <h1 id = "nav-header">Othello</h1>
-        <div id = "scoreboard">
-            Number of Tiles: 
-            <div class = "numTiles">Black: <span id = "num-black-tiles"></span></div>
-            <div class = "numTiles">White: <span id = "num-white-tiles"></span></div>
+         <div id = "restart-btn"><h3 id = "restart-txt">Restart Game</h3></div>
+    </nav>
+    <div id = "center-section">
+        <div id = "board"> </div>
+        <div id = "footer">     
+
+            <div id = "white-tiles-div" class = "white">
+                <div class = "numTiles">Tiles<br><span id = "num-white-tiles"></span></div>  
+            </div>
+            <div id = "black-tiles-div" class = "black">
+                <div class = "numTiles">Tiles<br><span id = "num-black-tiles"></span></div>   
+            </div>
+    
+    
         </div>
-        </nav>
-    <div id = "board">
-
-
     </div>
-    <div id = "footer">
-        <h3>Current turn:</h3>
-    </div>
+
 
     <script src="js/script.js"></script>
 </body>
