@@ -60,6 +60,8 @@ const processSquareSelection = (event) => {
 
     // change grid for given row and column
     grid[rowClicked][colClicked] = currentPlayer;
+    flipTiles(rowClicked, colClicked);
+
     updateHTML();
 }
 
@@ -77,7 +79,12 @@ const flipTiles = (row, col) => {
 const flipTilesNorth = (row, col) =>{
 
     let numTilesToFlip = countTilesNorth(row, col);
-    console.log("tiles to the north: " + numTiles);
+    console.log("Tiles to the north: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[row - 1 - flips][col] *= -1; // flip color
+    }
 }
 
 /*
@@ -87,14 +94,27 @@ const countTilesNorth = (newTileRow, newTileCol) =>
 {
     let tilesToChange = 0;
     const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    console.log ("attacking color: " + attackingColor);
     const colorToChange = -attackingColor;
-    let currentCol = newTileCol - 1; // move to first row above 
-    while (currentCol > 0 && grid[newTileRow][currentCol] === colorToChange)
+    console.log("color to change to: " + colorToChange);
+    let currentRow = newTileRow - 1; // move to first row above 
+    while (currentRow > 0 && grid[currentRow][newTileCol] === colorToChange)
     {
+        console.log ("adding at " + currentRow + ", " + newTileCol);
         tilesToChange++;
-        currentCol--;
+        
+        currentRow--;
     }
-    return tilesToChange;
+    if (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    {
+        console.log ("tiles to change: " + tilesToChange);
+        return tilesToChange;
+    }
+    else // enemy line ends with empty space or edge. 
+    {
+        console.log ("no changes required");
+        return 0; 
+    }
 }
 
 
