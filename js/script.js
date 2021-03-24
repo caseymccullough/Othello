@@ -1,20 +1,25 @@
 // 
-
+let grid;
 let gameBoard = document.getElementById("board");
 let restartButton = document.getElementById("restart-btn");
+
+let dingSound;
 /*
 let ding = document.getElementById("ding");
 can't get this to work . . . 
 */
 
-// 
+// or make game class that holds state of the game. . . . 
 
-let grid = [];
+
 let currentPlayer;
 
 
 const init = () => {
 
+    grid = [];
+    dingSound = new sound ("sounds/ding.wav");
+    
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
@@ -50,13 +55,14 @@ const init = () => {
 const processSquareSelection = (event) => {
 
     // // play sound
-    // ding.play();
+    dingSound.play();
 
-    console.log ("Square played for " + currentPlayer);
     const location = event.target.id;
     
     let rowClicked = location.charAt(1);
     let colClicked = location.charAt(3);
+
+    console.log ("Square played at (" + rowClicked + " , " + colClicked + ")" );
 
     // change grid for given row and column
     grid[rowClicked][colClicked] = currentPlayer;
@@ -73,17 +79,65 @@ const processSquareSelection = (event) => {
 const flipTiles = (row, col) => {
 
     flipTilesNorth(row, col);
-   // flipTilesSouth(row, col);    
+    flipTilesNorthEast(row, col);
+    flipTilesEast(row, col);
+    //flipTilesSouthEast(row, col);
+    flipTilesSouth(row, col);
+    flipTilesWest(row, col);   
 }
 
 const flipTilesNorth = (row, col) =>{
 
     let numTilesToFlip = countTilesNorth(row, col);
-    console.log("Tiles to the north: " + numTilesToFlip);
+    console.log ("\tTiles to North: " + numTilesToFlip);
 
     for (let flips = 0; flips < numTilesToFlip; flips++)
     {
         grid[row - 1 - flips][col] *= -1; // flip color
+    }
+}
+
+const flipTilesNorthEast = (row, col) =>{
+
+    let numTilesToFlip = countTilesNorthEast(row, col);
+    console.log ("\tTiles to NorthEast: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[row - 1 - flips][parseInt(col) + 1 + flips] *= -1; // flip color
+    }
+}
+
+const flipTilesEast = (row, col) =>{
+
+    let numTilesToFlip = countTilesEast(row, col);
+    console.log ("\tTiles to East: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[row][parseInt(col) + 1 + flips] *= -1; // flip color
+    }
+}
+
+const flipTilesSouth = (row, col) =>{
+
+    let numTilesToFlip = countTilesSouth(row, col);
+    console.log ("\tTiles to South: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[parseInt(row) + 1 + flips][col] *= -1; // flip color
+    }
+}
+
+const flipTilesWest = (row, col) =>{
+
+    let numTilesToFlip = countTilesWest(row, col);
+    console.log ("\tTiles to West: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[row][parseInt(col) - 1 - flips] *= -1; // flip color
     }
 }
 
@@ -94,26 +148,136 @@ const countTilesNorth = (newTileRow, newTileCol) =>
 {
     let tilesToChange = 0;
     const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
-    console.log ("attacking color: " + attackingColor);
     const colorToChange = -attackingColor;
-    console.log("color to change to: " + colorToChange);
     let currentRow = newTileRow - 1; // move to first row above 
-    while (currentRow > 0 && grid[currentRow][newTileCol] === colorToChange)
+    while (currentRow >= 0 && grid[currentRow][newTileCol] === colorToChange)
     {
         console.log ("adding at " + currentRow + ", " + newTileCol);
         tilesToChange++;
         
         currentRow--;
     }
-    if (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    if (currentRow < 0 || grid[currentRow][newTileCol] == 0) // prevents trying to assess element past edge
     {
-        console.log ("tiles to change: " + tilesToChange);
+        return 0; // reached edge of board without another attacking piece
+  
+    }
+    else // (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    {
         return tilesToChange;
     }
-    else // enemy line ends with empty space or edge. 
+}
+
+/*
+    col will be increasing, row decreasing. 
+*/
+const countTilesNorthEast = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentRow = newTileRow - 1; // move to upper right
+    let currentCol = parseInt(newTileCol) + 1; // of newTile
+    console.log ("NE initial: " + currentRow + ", " + currentCol);
+    while (currentRow >= 0 && currentCol < grid[0].length &&
+        grid[currentRow][currentCol] === colorToChange)
     {
-        console.log ("no changes required");
-        return 0; 
+        console.log ("adding at " + currentRow + ", " + currentCol);
+        tilesToChange++;
+        
+        currentRow--;
+        currentCol++; 
+    }
+    if (currentRow < 0 || currentCol >= grid[0].length || grid[currentRow][currentCol] == 0) // prevents trying to assess element past edge
+    {
+        return 0; // reached edge of board without another attacking piece
+  
+    }
+    else // (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
+/*
+    col will be increasing, row stays the same. 
+*/
+const countTilesEast = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentCol = parseInt(newTileCol) + 1; // move to first row below 
+   
+    while (currentCol < grid[0].length && grid[newTileRow][currentCol] === colorToChange)
+    {
+        console.log ("adding at " + newTileRow + ", " + currentCol);
+        tilesToChange++;  
+        currentCol++;
+    }
+    if (currentCol >= grid[0].length || grid[newTileRow][currentCol] === 0)
+    {
+        return 0; // reached edge of board OR ends with empty
+    }
+    
+    else // (grid[currentRow][newTileCol] === attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
+
+/*
+    col will be dropping, row stays the same. 
+*/
+const countTilesSouth = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentRow = parseInt(newTileRow) + 1; // move to first row below 
+    
+    while (currentRow < grid.length && grid[currentRow][newTileCol] === colorToChange)
+    {
+        console.log ("adding at " + currentRow + ", " + newTileCol);
+        tilesToChange++;  
+        currentRow++;
+    }
+    if (currentRow >= grid.length || grid[currentRow][newTileCol] === 0)
+    {
+        return 0; // reached edge of board OR ends with empty
+    }
+    
+    else // (grid[currentRow][newTileCol] === attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
+/*
+    col will be increasing, row stays the same. 
+*/
+const countTilesWest = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentCol = parseInt(newTileCol) - 1; // move to first row below 
+   
+    while (currentCol > 0 && grid[newTileRow][currentCol] === colorToChange)
+    {
+        console.log ("adding at " + newTileRow + ", " + currentCol);
+        tilesToChange++;  
+        currentCol--;
+    }
+    if (currentCol < 0 || grid[newTileRow][currentCol] === 0)
+    {
+        return 0; // reached edge of board OR ends with empty
+    }
+    
+    else // (grid[currentRow][newTileCol] === attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
     }
 }
 
@@ -189,7 +353,21 @@ const restartGame = () => {
     console.log ("RESTART");
 }
 
-
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    }
+    this.stop = function(){
+      this.sound.pause();
+    }
+  }
+  
 
 init();
 
