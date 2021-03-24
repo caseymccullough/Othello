@@ -4,6 +4,9 @@ let gameBoard = document.getElementById("board");
 let restartButton = document.getElementById("restart-btn");
 
 let dingSound;
+let restartSound;
+
+let dingSoundOn = false;
 /*
 let ding = document.getElementById("ding");
 can't get this to work . . . 
@@ -19,6 +22,7 @@ const init = () => {
 
     grid = [];
     dingSound = new sound ("sounds/ding.wav");
+    restartSound = new sound ("sounds/fairy-restart.wav");
     
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
@@ -51,14 +55,17 @@ const init = () => {
 }
 
 
-
 const processSquareSelection = (event) => {
 
-    // // play sound
-    dingSound.play();
-
+    // option to play sound
+    if (dingSoundOn)
+    {
+        dingSound.play();
+    }
+    
     const location = event.target.id;
     
+    /* id has format "r#c#" */
     let rowClicked = location.charAt(1);
     let colClicked = location.charAt(3);
 
@@ -81,9 +88,11 @@ const flipTiles = (row, col) => {
     flipTilesNorth(row, col);
     flipTilesNorthEast(row, col);
     flipTilesEast(row, col);
-    //flipTilesSouthEast(row, col);
+    flipTilesSouthEast(row, col);
     flipTilesSouth(row, col);
-    flipTilesWest(row, col);   
+    flipTilesSouthWest(row, col);
+    flipTilesWest(row, col);
+    flipTilesNorthWest(row, col);   
 }
 
 const flipTilesNorth = (row, col) =>{
@@ -119,6 +128,17 @@ const flipTilesEast = (row, col) =>{
     }
 }
 
+const flipTilesSouthEast = (row, col) =>{
+
+    let numTilesToFlip = countTilesSouthEast(row, col);
+    console.log ("\tTiles to SouthEast: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[parseInt(row) + 1 + flips][parseInt(col) + 1 + flips] *= -1; // flip color
+    }
+}
+
 const flipTilesSouth = (row, col) =>{
 
     let numTilesToFlip = countTilesSouth(row, col);
@@ -130,6 +150,17 @@ const flipTilesSouth = (row, col) =>{
     }
 }
 
+const flipTilesSouthWest = (row, col) =>{
+
+    let numTilesToFlip = countTilesSouthWest(row, col);
+    console.log ("\tTiles to SouthWest: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[parseInt(row) + 1 + flips][parseInt(col) - 1 - flips] *= -1; // flip color
+    }
+}
+
 const flipTilesWest = (row, col) =>{
 
     let numTilesToFlip = countTilesWest(row, col);
@@ -138,6 +169,17 @@ const flipTilesWest = (row, col) =>{
     for (let flips = 0; flips < numTilesToFlip; flips++)
     {
         grid[row][parseInt(col) - 1 - flips] *= -1; // flip color
+    }
+}
+
+const flipTilesNorthWest = (row, col) =>{
+
+    let numTilesToFlip = countTilesNorthWest(row, col);
+    console.log ("\tTiles to NorthWest: " + numTilesToFlip);
+
+    for (let flips = 0; flips < numTilesToFlip; flips++)
+    {
+        grid[parseInt(row) -1 - flips][parseInt(col) - 1 - flips] *= -1; // flip color
     }
 }
 
@@ -178,7 +220,7 @@ const countTilesNorthEast = (newTileRow, newTileCol) =>
     const colorToChange = -attackingColor;
     let currentRow = newTileRow - 1; // move to upper right
     let currentCol = parseInt(newTileCol) + 1; // of newTile
-    console.log ("NE initial: " + currentRow + ", " + currentCol);
+    
     while (currentRow >= 0 && currentCol < grid[0].length &&
         grid[currentRow][currentCol] === colorToChange)
     {
@@ -226,6 +268,37 @@ const countTilesEast = (newTileRow, newTileCol) =>
     }
 }
 
+/*
+    col will be increasing, row decreasing. 
+*/
+const countTilesSouthEast = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentRow = parseInt(newTileRow )+ 1; // move to upper right
+    let currentCol = parseInt(newTileCol) + 1; // of newTile
+    
+    while (currentRow < grid.length && currentCol < grid[0].length &&
+        grid[currentRow][currentCol] === colorToChange)
+    {
+        console.log ("adding at " + currentRow + ", " + currentCol);
+        tilesToChange++;
+        
+        currentRow++;
+        currentCol++; 
+    }
+    if (currentRow >= grid.length || currentCol >= grid[0].length || grid[currentRow][currentCol] == 0) // prevents trying to assess element past edge
+    {
+        return 0; // reached edge of board without another attacking piece
+  
+    }
+    else // (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
 
 /*
     col will be dropping, row stays the same. 
@@ -255,6 +328,37 @@ const countTilesSouth = (newTileRow, newTileCol) =>
 }
 
 /*
+    col will be decreasing, row decreasing. 
+*/
+const countTilesSouthWest = (newTileRow, newTileCol) =>
+{
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentRow = parseInt(newTileRow) + 1; // move to lower left
+    let currentCol = parseInt(newTileCol) - 1; // of newTile
+    
+    console.log ("SW initial: " + currentRow + ", " + currentCol);
+    while (currentRow < grid.length && currentCol >= 0 &&
+        grid[currentRow][currentCol] === colorToChange)
+    {
+        console.log ("adding at " + currentRow + ", " + currentCol);
+        tilesToChange++;
+        
+        currentRow++;
+        currentCol--; 
+    }
+    if (currentRow >= grid.length || currentCol < 0 || grid[currentRow][currentCol] == 0) // prevents trying to assess element past edge
+    {
+        return 0; // reached edge of board without another attacking piece
+    }
+    else // (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
+/*
     col will be increasing, row stays the same. 
 */
 const countTilesWest = (newTileRow, newTileCol) =>
@@ -276,6 +380,40 @@ const countTilesWest = (newTileRow, newTileCol) =>
     }
     
     else // (grid[currentRow][newTileCol] === attackingColor) // enemy line is "sandwiched"
+    {
+        return tilesToChange;
+    }
+}
+
+/*
+    col will be increasing, row decreasing. 
+*/
+const countTilesNorthWest = (newTileRow, newTileCol) =>
+{
+    
+    let tilesToChange = 0;
+    const attackingColor = grid[newTileRow][newTileCol]; // -1 or +1
+    const colorToChange = -attackingColor;
+    let currentRow = parseInt(newTileRow) - 1; // move to upper right
+    let currentCol = parseInt(newTileCol) - 1; // of newTile
+    
+    console.log ("NW initial: " + currentRow + ", " + currentCol);
+    
+    while (currentRow >= 0 && currentCol >= 0 &&
+        grid[currentRow][currentCol] === colorToChange)
+    {
+        console.log ("adding at " + currentRow + ", " + currentCol);
+        tilesToChange++;
+        
+        currentRow--;
+        currentCol--; 
+    }
+    if (currentRow < 0 || currentCol < 0 || grid[currentRow][currentCol] == 0) // prevents trying to assess element past edge
+    {
+        return 0; // reached edge of board without another attacking piece
+  
+    }
+    else // (grid[currentRow][newTileCol] == attackingColor) // enemy line is "sandwiched"
     {
         return tilesToChange;
     }
@@ -351,6 +489,7 @@ function makeSquareBlack(row, col) {
 const restartGame = () => {
 
     console.log ("RESTART");
+    restartSound.play();
 }
 
 function sound(src) {
@@ -359,7 +498,9 @@ function sound(src) {
     this.sound.setAttribute("preload", "auto");
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
+
     document.body.appendChild(this.sound);
+
     this.play = function(){
       this.sound.play();
     }
