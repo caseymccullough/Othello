@@ -55,8 +55,7 @@ nav{
 
     padding-top: 2%;
     
-    /* grid-gap: 3px; */
-    
+    /* grid-gap: 3px; */   
 }
 
   .square{
@@ -65,6 +64,25 @@ nav{
       width: 63px;
       height: 63px;
       margin: auto;
+    
+  }
+
+  .black-tile {
+    background: black;
+    border: 2 px white solid;
+    border-radius: 50%;
+    width: 61px;
+    height: 61px;
+    margin: auto;   
+  }
+
+  .white-tile {
+    background: white;
+    border: 2 px black solid;
+    border-radius: 50%;
+    width: 61px;
+    height: 61px;
+    margin: auto;
     
   }
 
@@ -104,6 +122,6 @@ nav{
       }
   }
 
-  #gold-border {
+  .gold-border {
       border: 2px solid gold;
   }

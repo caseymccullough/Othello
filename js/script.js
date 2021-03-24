@@ -6,7 +6,7 @@ let restartButton = document.getElementById("restart-btn");
 let dingSound;
 let restartSound;
 
-let dingSoundOn = false;
+let dingSoundOn = true;
 /*
 let ding = document.getElementById("ding");
 can't get this to work . . . 
@@ -41,12 +41,14 @@ const init = () => {
         for (let col = 0; col < grid[row].length; col++)
         {
             let square = document.createElement("div");
+           
             
             square.id = "r" + row + "c" + col;
             square.classList.add("square");
-            square.innerText = "r" + row + "c" + col;
 
             square.addEventListener('click', processSquareSelection);
+            
+
             gameBoard.appendChild(square);
         }
     }
@@ -64,6 +66,11 @@ const processSquareSelection = (event) => {
     }
     
     const location = event.target.id;
+    console.log ("target: " + location);
+    console.log ("element: " + document.getElementById(location));
+
+    /* make square  unclickable */
+    document.getElementById(location).removeEventListener("click", processSquareSelection);
     
     /* id has format "r#c#" */
     let rowClicked = location.charAt(1);
@@ -74,6 +81,8 @@ const processSquareSelection = (event) => {
     // change grid for given row and column
     grid[rowClicked][colClicked] = currentPlayer;
     flipTiles(rowClicked, colClicked);
+
+
 
     updateHTML();
 }
@@ -398,7 +407,7 @@ const countTilesNorthWest = (newTileRow, newTileCol) =>
     let currentCol = parseInt(newTileCol) - 1; // of newTile
     
     console.log ("NW initial: " + currentRow + ", " + currentCol);
-    
+
     while (currentRow >= 0 && currentCol >= 0 &&
         grid[currentRow][currentCol] === colorToChange)
     {
@@ -430,6 +439,7 @@ const updateHTML = () => {
         for (let col = 0; col < grid[row].length; col++)
         {
             
+
             if (grid[row][col] == -1) {
                 makeSquareWhite(row, col);
                 whiteTileCount++;
@@ -476,20 +486,33 @@ function makeSquareWhite (row, col) {
         let squareToWhite = document.getElementById(squareId);
         squareToWhite.classList.remove("black");
         squareToWhite.classList.add("white");
+        
+
+        // whiteCircle = document.createElement("div");
+        // whiteCircle.classList.add("white-tile");
+
+      
 
 }
 function makeSquareBlack(row, col) {
     
         let squareId = "r" + row + "c" + col;
         let squareToBlack = document.getElementById(squareId);
+        
+        // blackCircle = document.createElement("div");
+        // blackCircle.classList.add("black-tile");
+        
         squareToBlack.classList.remove("white");
         squareToBlack.classList.add("black");
+        
 }
 
 const restartGame = () => {
 
     console.log ("RESTART");
     restartSound.play();
+    init();
+    
 }
 
 function sound(src) {

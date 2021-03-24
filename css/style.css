@@ -56,6 +56,24 @@ nav {
   margin: auto;
 }
 
+.black-tile {
+  background: black;
+  border: 2 px white solid;
+  border-radius: 50%;
+  width: 61px;
+  height: 61px;
+  margin: auto;
+}
+
+.white-tile {
+  background: white;
+  border: 2 px black solid;
+  border-radius: 50%;
+  width: 61px;
+  height: 61px;
+  margin: auto;
+}
+
 .black {
   background-color: black;
   color: white;
@@ -89,7 +107,7 @@ nav {
 }
 
 .gold-border {
-  border: 3px solid gold;
+  border: 2px solid gold;
 }
 
 /*# sourceMappingURL=style.css.map */
