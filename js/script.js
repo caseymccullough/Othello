@@ -44,12 +44,22 @@ const init = () => {
             square.id = "r" + row + "c" + col;
             square.classList.add("square");
 
+            let circleDiv = document.createElement("div");
+            
+
             if (grid[row][col] === 0)
             {
                 square.addEventListener('click', processSquareSelection);
             }
+            else if (grid[row][col] < 0) {
 
-            let circle = document.createElement("div");
+                circleDiv.classList.add ("white-tile");  
+            }
+            else {
+                circleDiv.classList.add ("black-tile");  
+            }
+
+            square.appendChild(circleDiv);
 
 
             gameBoard.appendChild(square);
@@ -69,6 +79,8 @@ const processSquareSelection = (event) => {
     }
     
     const location = event.target.id;
+
+
     console.log ("target: " + location);
     console.log ("element: " + document.getElementById(location));
 
@@ -462,11 +474,11 @@ const updateHTML = () => {
     
     if (blackTileCount + whiteTileCount === 64) // all tiles are played
     {
-        
+        endGame(blackTileCount, whiteTileCount); // TEMP ONLY for testing
     }
     else
     {
-        endGame(blackTileCount, whiteTileCount); // TEMP ONLY for testing
+       
         setNextTurn();
     }
 
@@ -496,27 +508,28 @@ const setNextTurn = () => {
 function makeSquareWhite (row, col) {
     
         let squareId = "r" + row + "c" + col;
-        let squareToWhite = document.getElementById(squareId);
-        squareToWhite.classList.remove("black");
-        squareToWhite.classList.add("white");
-        
+        let tile = document.getElementById(squareId).firstChild;
+        tile.classList.remove("black-tile");
+        tile.classList.add("white-tile");
 
         // whiteCircle = document.createElement("div");
         // whiteCircle.classList.add("white-tile");
-
-      
+        // squareToWhite.appendChild(whiteCircle);
 
 }
 function makeSquareBlack(row, col) {
     
         let squareId = "r" + row + "c" + col;
-        let squareToBlack = document.getElementById(squareId);
+        let tile = document.getElementById(squareId).firstChild;
+        tile.classList.remove("white-tile");
+        tile.classList.add("black-tile");
         
         // blackCircle = document.createElement("div");
         // blackCircle.classList.add("black-tile");
+        // squareToBlack.appendChild(blackCircle);
         
-        squareToBlack.classList.remove("white");
-        squareToBlack.classList.add("black");
+        // squareToBlack.classList.remove("white"); // may or may not exist
+        // squareToBlack.classList.add("black");
         
 }
 
