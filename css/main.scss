@@ -44,7 +44,7 @@ nav{
 
 #center-section{
     background-color: darkgray;
-    border: 2px white solid;
+    border: 3px white solid;
     border-radius: 15px;
 }
 
@@ -69,33 +69,25 @@ nav{
     
   }
 
-  .black-tile {
-    background: black;
-    border: 2 px white solid;
+  .tile{
     border-radius: 50%;
-    width: 61px;
-    height: 61px;
-    margin: auto;   
-  }
-
-  .white-tile {
-    background: white;
-    border: 2 px black solid;
-    border-radius: 50%;
-    width: 61px;
-    height: 61px;
-    margin: auto;
+    width: 60px;
+    height: 60px;
+    margin: auto; 
+    background-color: transparent;
     
   }
 
   .black {
       background-color: black;
       color: white;
+      border: 1px solid white;
   }
 
   .white {
       background-color: white;
       color: black;
+      border: 1px solid black;
   }
 
   #footer{

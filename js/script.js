@@ -45,7 +45,7 @@ const init = () => {
             square.classList.add("square");
 
             let circleDiv = document.createElement("div");
-            
+     
 
             if (grid[row][col] === 0)
             {
@@ -53,10 +53,10 @@ const init = () => {
             }
             else if (grid[row][col] < 0) {
 
-                circleDiv.classList.add ("white-tile");  
+                circleDiv.classList.add ("white");  
             }
             else {
-                circleDiv.classList.add ("black-tile");  
+                circleDiv.classList.add ("black");  
             }
 
             square.appendChild(circleDiv);
@@ -85,7 +85,7 @@ const processSquareSelection = (event) => {
     console.log ("element: " + document.getElementById(location));
 
     /* make square  unclickable */
-    document.getElementById(location).removeEventListener("click", processSquareSelection);
+    //document.getElementById(location).removeEventListener("click", processSquareSelection);
     
     /* id has format "r#c#" */
     let rowClicked = location.charAt(1);
@@ -509,8 +509,8 @@ function makeSquareWhite (row, col) {
     
         let squareId = "r" + row + "c" + col;
         let tile = document.getElementById(squareId).firstChild;
-        tile.classList.remove("black-tile");
-        tile.classList.add("white-tile");
+        tile.classList.remove("black");
+        tile.classList.add("white", "tile");
 
         // whiteCircle = document.createElement("div");
         // whiteCircle.classList.add("white-tile");
@@ -521,8 +521,8 @@ function makeSquareBlack(row, col) {
     
         let squareId = "r" + row + "c" + col;
         let tile = document.getElementById(squareId).firstChild;
-        tile.classList.remove("white-tile");
-        tile.classList.add("black-tile");
+        tile.classList.remove("white");
+        tile.classList.add("black", "tile");
         
         // blackCircle = document.createElement("div");
         // blackCircle.classList.add("black-tile");
