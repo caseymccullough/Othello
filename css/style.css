@@ -42,10 +42,10 @@ nav {
 #board {
   display: grid;
   justify-content: center;
+  background-color: green;
   grid-template-columns: repeat(8, 65px [col-start]);
   grid-template-rows: repeat(8, 65px [row-start]);
   padding-top: 2%;
-  /* grid-gap: 3px; */
 }
 
 .square {

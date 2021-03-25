@@ -41,13 +41,16 @@ const init = () => {
         for (let col = 0; col < grid[row].length; col++)
         {
             let square = document.createElement("div");
-           
-            
             square.id = "r" + row + "c" + col;
             square.classList.add("square");
 
-            square.addEventListener('click', processSquareSelection);
-            
+            if (grid[row][col] === 0)
+            {
+                square.addEventListener('click', processSquareSelection);
+            }
+
+            let circle = document.createElement("div");
+
 
             gameBoard.appendChild(square);
         }
