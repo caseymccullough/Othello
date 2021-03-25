@@ -42,7 +42,7 @@ nav {
 #board {
   display: grid;
   justify-content: center;
-  background-color: green;
+  background-color: black;
   grid-template-columns: repeat(8, 65px [col-start]);
   grid-template-rows: repeat(8, 65px [row-start]);
   padding-top: 2%;
@@ -108,6 +108,12 @@ nav {
 
 .gold-border {
   border: 2px solid gold;
+}
+
+#end-game-banner {
+  font-size: 1em;
+  color: gold;
+  font-weight: 300;
 }
 
 /*# sourceMappingURL=style.css.map */

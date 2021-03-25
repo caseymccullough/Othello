@@ -460,7 +460,17 @@ const updateHTML = () => {
     document.getElementById("num-black-tiles").innerHTML = blackTileCount;
     document.getElementById("num-white-tiles").innerHTML = whiteTileCount;
     
-    setNextTurn();
+    if (blackTileCount + whiteTileCount === 64) // all tiles are played
+    {
+        
+    }
+    else
+    {
+        endGame(blackTileCount, whiteTileCount); // TEMP ONLY for testing
+        setNextTurn();
+    }
+
+    
 
 
 } // end updateHTML()
@@ -508,6 +518,33 @@ function makeSquareBlack(row, col) {
         squareToBlack.classList.remove("white");
         squareToBlack.classList.add("black");
         
+}
+
+const endGame = (blackTileCount, whiteTileCount) => {
+    
+    let endGameMsg;
+    if (blackTileCount > whiteTileCount)
+    {
+        endGameMsg = "Black Wins!"
+    }
+    else if (whiteTileCount > blackTileCount)
+    {
+        endGameMsg = "White Wins!";
+    }
+    else 
+    {
+        endGameMsg = "Game Ends in a Tie!"
+    }
+
+    showEndGameMessage(endGameMsg);
+
+}
+
+const showEndGameMessage = (msg) => {
+
+    endGameBanner = document.getElementById("end-game-banner");
+    endGameBanner.innerText = msg;
+
 }
 
 const restartGame = () => {
