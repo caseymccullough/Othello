@@ -39,6 +39,7 @@ The init() method establishes a starting gameboard with the expected four-tile l
    
    1. Functioning restart button
    2. Reduce redundancy in code that evaluates all tiles that need to be flipped after a new tile is placed. 
-   3. Develop AI to enable single-player option.  Version 1.0 of AI would assess all open spaces that are adjacent to played pieces and calculate the number of flipped tiles that will result from their selection.  
+   3. Confirm that player flips at least one opposing tile before accepting his/ her move (this is an official but little-known rule)
+   4. Develop AI to enable single-player option.  Version 1.0 of AI would assess all open spaces that are adjacent to played pieces and calculate the number of flipped tiles that will result from their selection.  
 
 
