@@ -2,7 +2,7 @@
 
 ## Motivation
 
-I was looking to code a game that would provide an appropriate challenge for my HTML / CSS/ JS skill set. 
+I was looking to code a game that would provide an appropriate challenge for my HTML / CSS/ JS skill set. Othello is a game I played a lot as a child.  It is marketed with the motto "A Minute to Learn . . . A Lifetime to Master!".  True statement--the rules are very straightforward and easy to grasp, so I thought their translation to code would be straightforward.  I was about half right!
 
 ## Code Style
 
@@ -25,5 +25,10 @@ The init() method establishes a starting gameboard with the expected four-tile l
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     grid.push ([0, 0, 0, 0, 0, 0, 0, 0]);
     
+   ## Remaining Challenges
+   
+   1. Functioning restart button
+   2. Reduce redundancy in code that evaluates all tiles that need to be flipped after a new tile is placed. 
+   3. Develop AI to enable single-player option.  Version 1.0 of AI would assess all open spaces that are adjacent to played pieces and calculate the number of flipped tiles that will result from their selection.  
 
 
