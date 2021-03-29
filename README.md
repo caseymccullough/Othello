@@ -4,15 +4,19 @@
 
 I was looking to code a game that would provide an appropriate challenge for my HTML / CSS/ JS skill set. Othello is a game I played a lot as a child.  It is marketed with the motto "A Minute to Learn . . . A Lifetime to Master!".  True statement--the rules are very straightforward and easy to grasp, so I thought their translation to code would be straightforward.  I was about half right!
 
+## Link to the game
+
+<a href="https://caseymccullough.github.io/Othello/" </a>
+
 ## How to play
 
 ### Object of the Game
 
 The object of the game is to have the majority of your color disks face up on the board at the end of the game. 
 
-### 
+### Game Play
 
-The begins with four tiles deployed as shown below.  Players select a color, then alternate turns until all 64 tiles have been placed. 
+The game begins with four tiles deployed as shown below.  Players select a color, then alternate turns until all 64 tiles have been placed. 
 
 A move consists of "outflanking" your opponent's disk(s), then flipping the outflanked disks to your color.  To "outflank" means to place a tile on the board so that your opponent's row (or rows) of disks is bordered on each end by a disk of your color.  
 
