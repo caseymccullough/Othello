@@ -6,7 +6,7 @@ I was looking to code a game that would provide an appropriate challenge for my 
 
 ## Link to the game
 
-<a href="https://caseymccullough.github.io/Othello/" </a>
+<a href="https://caseymccullough.github.io/Othello/"> Othello </a>
 
 ## How to play
 
